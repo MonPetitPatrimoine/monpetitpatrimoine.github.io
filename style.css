@@ -12,7 +12,8 @@ a{color:var(--accent);text-underline-offset:3px}
 a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
 img{max-width:100%;height:auto}
 p,li,summary,td{overflow-wrap:break-word}
-a[href^="mailto:"]{overflow-wrap:anywhere}
+a[href^="mailto:"]{overflow-wrap:normal}
+@media (min-width:480px){.mail{white-space:nowrap}.mail wbr{display:none}}
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
 .narrow{max-width:760px;margin-left:auto;margin-right:auto}
 .wrap.narrow{max-width:800px}
@@ -31,7 +32,13 @@ p{margin:0 0 16px}
 /* en-tête */
 .top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;gap:20px;min-height:66px}
-.brand{display:inline-flex;align-items:center;gap:10px;font-weight:700;color:var(--ink);text-decoration:none}
+.brand{display:inline-flex;align-items:center;gap:10px;font-weight:700;color:var(--ink);text-decoration:none;white-space:nowrap}
+/* mise en page du texte : titres équilibrés, pas de mot seul en dernière ligne */
+h1,h2,h3,h4,.eyebrow,summary,figcaption,th,td,li{text-wrap:balance}
+p,dd,blockquote,label,.article li{text-wrap:pretty}
+.lead{text-wrap:balance}
+.nw{white-space:nowrap}
+@media (max-width:480px){h1{font-size:28px}}
 .top .brand{margin-right:auto}
 .mark{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#2F5BEA,#7A55C7);color:#fff;flex:none}   /* le logo : modèle de l'application, du livre blanc et de l'icône (outils/icone.js) */
 .top nav{display:flex;gap:20px}
@@ -87,11 +94,16 @@ section.band{background:var(--surface);border-block:1px solid var(--line)}
 @media (max-width:960px){.usage{grid-template-columns:1fr;gap:20px}.usage.flip>div:first-child{order:0}}
 /* comparatif */
 .tablewrap{overflow-x:auto;margin:22px 0;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
-.cmp{border-collapse:collapse;width:100%;min-width:600px;font-size:16px}
+.cmp{border-collapse:collapse;width:100%;min-width:720px;font-size:16px}
 .cmp th,.cmp td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+.cmp th{white-space:nowrap}   /* le tableau défile sur téléphone : intitulés toujours sur une ligne */
+@media (min-width:1000px){.cmp th,.cmp td:not(:last-child){white-space:nowrap}}   /* sur grand écran, chaque case tient sur une ligne ; seule la colonne de l’application passe à la ligne */
+.wrap.narrow.wide{max-width:1040px}
+@media (min-width:760px){td.court,th.court{white-space:nowrap}}
+.article .tablewrap td,.article .tablewrap th{min-width:8.5em}
 .cmp thead th{font-size:15px;color:var(--muted)}
 .cmp thead th:last-child,.cmp td:last-child{background:var(--accent-soft)}
-.cmp tbody th{font-weight:600;width:24%}
+.cmp tbody th{font-weight:600}
 .cmp tr:last-child th,.cmp tr:last-child td{border-bottom:0}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:48px}
 .wrap.narrow.two{max-width:1040px}
