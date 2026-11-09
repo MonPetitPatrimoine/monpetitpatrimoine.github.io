@@ -131,6 +131,9 @@ section.band{background:var(--surface);border-block:1px solid var(--line)}
 .toc{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 22px;margin:26px 0}
 .toc ol{margin:6px 0 0;padding-left:22px}
 .legal h2{font-size:22px}
+.article .tablewrap table{border-collapse:collapse;width:100%;font-size:16px}
+.article .tablewrap th,.article .tablewrap td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+.article .tablewrap thead th{color:var(--muted);font-size:15px}
 /* pied */
 footer{border-top:1px solid var(--line);padding:44px 0 28px;font-size:15px;background:var(--surface)}
 footer .wrap{display:grid;grid-template-columns:1.2fr 2fr;gap:28px 40px}
