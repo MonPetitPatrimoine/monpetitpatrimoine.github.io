@@ -33,7 +33,7 @@ p{margin:0 0 16px}
 .top .wrap{display:flex;align-items:center;gap:20px;min-height:66px}
 .brand{display:inline-flex;align-items:center;gap:10px;font-weight:700;color:var(--ink);text-decoration:none}
 .top .brand{margin-right:auto}
-.mark{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#2F5BEA,#7A55C7);color:#fff;flex:none}
+.mark{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#2F5BEA,#7A55C7);color:#fff;flex:none}   /* le logo : modèle de l'application, du livre blanc et de l'icône (outils/icone.js) */
 .top nav{display:flex;gap:20px}
 .top nav a{color:var(--muted);text-decoration:none;font-weight:600;font-size:15px}
 .top nav a:hover,.top nav a[aria-current=page]{color:var(--ink)}
