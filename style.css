@@ -157,7 +157,7 @@ footer p{margin:10px 0 0}
 .fcols div{display:flex;flex-direction:column;gap:8px}
 .fcols a{color:var(--muted);text-decoration:none}
 .fcols a:hover{color:var(--ink);text-decoration:underline}
-.risk{grid-column:1/-1;color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:18px}
+.risk{grid-column:1/-1;color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:18px;text-align:center}
 @media (max-width:760px){footer .wrap{grid-template-columns:1fr}.fcols{grid-template-columns:1fr 1fr}}
 /* décompte avant l'ouverture des ventes (retiré à la reconstruction qui suit l'ouverture) */
 .soonbar{background:var(--accent-soft);border-bottom:1px solid var(--line);font-size:15px;line-height:1.5;padding:10px 0;text-align:center}
@@ -178,7 +178,8 @@ footer p{margin:10px 0 0}
 .fcard .go{font-weight:600;color:var(--accent);white-space:nowrap}
 @media (max-width:760px){.fgrid{grid-template-columns:1fr}.fcard{padding:18px;gap:14px}.fcard .go{display:none}}
 footer .social{display:flex;gap:10px;margin-top:16px}
-footer .social a{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;border:1px solid var(--line);color:var(--muted)}
-footer .social a:hover{color:var(--ink);border-color:var(--ink)}
+footer .social a{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;color:#fff}
+footer .social a.yt{background:#FF0033}footer .social a.yt .yt-play{fill:#FF0033}
+footer .social a.ig{background:linear-gradient(45deg,#F58529,#DD2A7B 55%,#8134AF)}
+footer .social a:hover{opacity:.85}
 footer .social svg{width:20px;height:20px}
-footer .social .yt-play{fill:var(--surface)}
