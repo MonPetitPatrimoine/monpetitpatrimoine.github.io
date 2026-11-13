@@ -183,3 +183,7 @@ footer .social a.yt{background:#FF0033}footer .social a.yt .yt-play{fill:#FF0033
 footer .social a.ig{background:linear-gradient(45deg,#F58529,#DD2A7B 55%,#8134AF)}
 footer .social a:hover{opacity:.85}
 footer .social svg{width:20px;height:20px}
+/* bandeau de contact de l'accueil : une idée par ligne, l'adresse sur une seule ligne dès que la largeur le permet */
+.note.lines>span{display:block}
+.note.lines>.muted{margin-top:4px}
+@media (min-width:560px){.note.lines>.one{white-space:nowrap}}
