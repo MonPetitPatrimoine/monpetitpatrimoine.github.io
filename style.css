@@ -157,3 +157,7 @@ footer p{margin:10px 0 0}
 .fcols a:hover{color:var(--ink);text-decoration:underline}
 .risk{grid-column:1/-1;color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:18px}
 @media (max-width:760px){footer .wrap{grid-template-columns:1fr}.fcols{grid-template-columns:1fr 1fr}}
+/* décompte avant l'ouverture des ventes (retiré à la reconstruction qui suit l'ouverture) */
+.soonbar{background:var(--accent-soft);border-bottom:1px solid var(--line);font-size:15px;line-height:1.5;padding:10px 0;text-align:center}
+.soonbar b{color:var(--accent)}
+[hidden]{display:none!important}
