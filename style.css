@@ -205,7 +205,15 @@ footer .social svg{width:20px;height:20px}
 .artlist li{border:1px solid var(--line);border-radius:12px;padding:18px 20px;background:var(--surface)}
 .artlist a{text-decoration:none}
 .artlist b{display:block;font-size:20px;margin-bottom:4px}
-.artlist span{display:block}
+.artlist li > span{display:block}
 .article .eyebrow a{color:inherit;text-decoration:none}
+/* liens vers les articles (SEO cas 11) */
+.artgrid{list-style:none;padding:0;margin:24px 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:640px){.artgrid{grid-template-columns:1fr}}
+.artgrid a{display:block;height:100%;padding:18px 20px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);text-decoration:none}
+.artgrid a:hover{border-color:var(--accent)}
+.artgrid b{display:block;font-size:19px;line-height:1.3;margin-bottom:6px}
+.artgrid a > span{display:block;color:var(--muted);font-size:16px}
+.usage .more{margin-top:14px;font-size:16px;color:var(--muted)}
 /* tableaux des articles sur un téléphone (après les règles générales des tableaux, qu’elles ne l’écrasent pas) */
 @media (max-width:480px){.article .tablewrap td,.article .tablewrap th{min-width:0;padding:8px 6px}.article .tablewrap table{font-size:15px}}
