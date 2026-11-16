@@ -105,7 +105,6 @@ section.band{background:var(--surface);border-block:1px solid var(--line)}
 .wrap.narrow.wide{max-width:1040px}
 @media (min-width:760px){td.court,th.court{white-space:nowrap}}
 .article .tablewrap td,.article .tablewrap th{min-width:8.5em}
-@media (max-width:480px){.article .tablewrap td,.article .tablewrap th{min-width:0;padding:8px 9px}}
 .cmp thead th{font-size:15px;color:var(--muted)}
 .cmp thead th:last-child,.cmp td:last-child{background:var(--accent-soft)}
 .cmp tbody th{font-weight:600}
@@ -208,3 +207,5 @@ footer .social svg{width:20px;height:20px}
 .artlist b{display:block;font-size:20px;margin-bottom:4px}
 .artlist span{display:block}
 .article .eyebrow a{color:inherit;text-decoration:none}
+/* tableaux des articles sur un téléphone (après les règles générales des tableaux, qu’elles ne l’écrasent pas) */
+@media (max-width:480px){.article .tablewrap td,.article .tablewrap th{min-width:0;padding:8px 6px}.article .tablewrap table{font-size:15px}}
