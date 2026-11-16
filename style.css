@@ -105,6 +105,7 @@ section.band{background:var(--surface);border-block:1px solid var(--line)}
 .wrap.narrow.wide{max-width:1040px}
 @media (min-width:760px){td.court,th.court{white-space:nowrap}}
 .article .tablewrap td,.article .tablewrap th{min-width:8.5em}
+@media (max-width:480px){.article .tablewrap td,.article .tablewrap th{min-width:0;padding:8px 9px}}
 .cmp thead th{font-size:15px;color:var(--muted)}
 .cmp thead th:last-child,.cmp td:last-child{background:var(--accent-soft)}
 .cmp tbody th{font-weight:600}
@@ -200,3 +201,10 @@ footer .social svg{width:20px;height:20px}
 .lb-x:hover,.lb-x:focus-visible{background:rgba(255,255,255,.3)}
 @media (prefers-reduced-motion:no-preference){.lb:target{animation:lbin .18s ease-out}}
 @keyframes lbin{from{opacity:0}to{opacity:1}}
+/* articles (SEO cas 10) : sommaire */
+.artlist{list-style:none;padding:0;margin:28px 0;display:flex;flex-direction:column;gap:18px}
+.artlist li{border:1px solid var(--line);border-radius:12px;padding:18px 20px;background:var(--surface)}
+.artlist a{text-decoration:none}
+.artlist b{display:block;font-size:20px;margin-bottom:4px}
+.artlist span{display:block}
+.article .eyebrow a{color:inherit;text-decoration:none}
