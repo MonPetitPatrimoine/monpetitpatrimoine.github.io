@@ -19,8 +19,10 @@ a[href^="mailto:"]{overflow-wrap:normal}
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
 .narrow{max-width:760px;margin-left:auto;margin-right:auto}
 .wrap.narrow{max-width:800px}
-h1,h2,h3{line-height:1.18;letter-spacing:-.018em;margin:0 0 14px;font-weight:700}
-h1{font-size:clamp(34px,5.6vw,56px)}
+h1,h2,h3,.h1{line-height:1.18;letter-spacing:-.018em;margin:0 0 14px;font-weight:700}
+h1,.h1{font-size:clamp(34px,5.6vw,56px)}
+/* accueil (SEO, 2026-11-16) : le titre pour Google est la petite ligne du haut (h1.eyebrow), la grande phrase garde l’aspect d’un titre (.h1) */
+h1.eyebrow{font-size:14px;line-height:inherit;font-weight:600;letter-spacing:.06em;margin:0 0 12px}
 h2{font-size:clamp(26px,3.4vw,34px)}
 h3{font-size:21px;font-weight:600}
 p{margin:0 0 16px}
@@ -36,11 +38,11 @@ p{margin:0 0 16px}
 .top .wrap{display:flex;align-items:center;gap:20px;min-height:66px}
 .brand{display:inline-flex;align-items:center;gap:10px;font-weight:700;color:var(--ink);text-decoration:none;white-space:nowrap}
 /* mise en page du texte : titres équilibrés, pas de mot seul en dernière ligne */
-h1,h2,h3,h4,.eyebrow,summary,figcaption,th,td,li{text-wrap:balance}
+h1,h2,h3,h4,.h1,.eyebrow,summary,figcaption,th,td,li{text-wrap:balance}
 p,dd,blockquote,label,.article li{text-wrap:pretty}
 .lead{text-wrap:balance}
 .nw{white-space:nowrap}
-@media (max-width:480px){h1{font-size:28px}}
+@media (max-width:480px){h1,.h1{font-size:28px}h1.eyebrow{font-size:14px}}
 .top .brand{margin-right:auto}
 .mark{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#2F5BEA,#7A55C7);color:#fff;flex:none}   /* le logo : modèle de l'application, du livre blanc et de l'icône (outils/icone.js) */
 .top nav{display:flex;gap:20px}
