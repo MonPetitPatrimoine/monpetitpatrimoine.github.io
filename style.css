@@ -239,3 +239,7 @@ footer .social svg{width:20px;height:20px}
 .buy .btn[disabled]{opacity:.5;cursor:not-allowed}
 .buy .err{color:var(--neg)}
 .key code{display:block;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:10px;word-break:break-all;font-size:15px}
+/* offres à venir (2027), en grisé pendant le lancement */
+.later{margin-top:34px}
+.later .card{opacity:.6;filter:grayscale(1)}
+.later .price{margin-top:16px}
