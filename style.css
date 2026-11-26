@@ -243,3 +243,8 @@ footer .social svg{width:20px;height:20px}
 .later{margin-top:34px}
 .later .card{opacity:.6;filter:grayscale(1)}
 .later .price{margin-top:16px}
+/* newsletter (26 novembre 2026) : bandeau, encadré de rappel, champ piège invisible */
+.newsbar a{font-weight:700;margin-left:6px}
+.newsbox{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin:32px 0 0;padding:16px 20px;border:1px solid var(--line);border-radius:12px;background:var(--accent-soft)}
+.newsbox p{margin:0;flex:1 1 280px}
+.piege{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
