@@ -54,3 +54,4 @@ h2{font-size:18px;margin:26px 0 10px}
 .install-t{display:flex;align-items:center;gap:12px;margin:0 0 12px}.install-t img{border-radius:10px;flex:0 0 auto}.install-t span span{display:block}
 .install .etapes{margin:0 0 8px}.install .btn{cursor:pointer;font:inherit;font-weight:700}
 .pict{width:20px;height:20px;vertical-align:-4px;color:var(--accent)}
+#version{font-size:12px;opacity:.8}
