@@ -8,6 +8,7 @@
    gardé chiffré pour l'ouverture hors ligne. Aucune mesure d'audience, aucun cookie. Tout texte venu des données est inséré
    comme du texte (textContent), jamais comme du HTML. */
 const API = "https://mon-petit-patrimoine-paiement.monpetitpatrimoine.workers.dev/sync/";
+const VERSION_APP = "3";   // même numéro que « ?v= » dans index.html et que le cache de sw.js
 const K_ASSOC = "mpp-mobile-association", K_BLOC = "mpp-mobile-bloc", K_MASQUE = "mpp-mobile-masque", K_PER = "mpp-mobile-periode";
 const $ = id => document.getElementById(id);
 const eur = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" });
@@ -147,6 +148,7 @@ async function demarrer() {
   const assoc = associer();
   $("accueil").hidden = !!assoc; $("bas").hidden = !assoc; $("actualiser").hidden = !assoc; $("masquer").hidden = !assoc;
   proposerInstallation(assoc);
+  $("version").textContent = "Version " + VERSION_APP + " · " + (INSTALLEE ? "application installée" : "dans le navigateur");
   if (!assoc) { etat(""); return; }
   const masque = !!lire(K_MASQUE); document.body.classList.toggle("cache", masque); $("masquer").setAttribute("aria-pressed", String(masque));
   const garde = lire(K_BLOC);
