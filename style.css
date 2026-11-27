@@ -258,3 +258,8 @@ footer .social svg{width:20px;height:20px}
 .consent-btns{display:flex;gap:10px;flex:0 0 auto}
 .consent-btns .btn{min-width:120px;justify-content:center}
 @media (max-width:480px){.consent-btns{flex:1 1 100%}.consent-btns .btn{flex:1 1 0;min-width:0}}
+
+/* étape téléphone (27 novembre 2026) : « Sur votre téléphone ? » seulement sur téléphone et tablette */
+.surtel{display:none}
+@media (max-width:760px),(hover:none) and (pointer:coarse){.surtel{display:block}}
+.lienbox.compact{margin-top:24px}
