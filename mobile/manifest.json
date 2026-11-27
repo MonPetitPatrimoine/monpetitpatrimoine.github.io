@@ -1,0 +1,18 @@
+{
+  "name": "Mon Petit Patrimoine",
+  "short_name": "Patrimoine",
+  "description": "Votre Synthèse Mon Petit Patrimoine sur le téléphone, en lecture seule. Chiffres chiffrés de bout en bout.",
+  "lang": "fr",
+  "id": "/mobile/",
+  "start_url": "/mobile/",
+  "scope": "/mobile/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FBFAF7",
+  "theme_color": "#2F5BEA",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
