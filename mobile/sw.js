@@ -2,7 +2,7 @@
 /* Mon Petit Patrimoine — © 2026. Tous droits réservés.
    mobile/sw.js : service worker de l'application mobile. Met en cache l'application elle-même (pour l'ouvrir hors ligne) ;
    jamais les chiffres : ils restent chiffrés dans le stockage local du téléphone (app.js). Changer VERSION à chaque modification. */
-const VERSION = "mpp-mobile-1";
+const VERSION = "mpp-mobile-2";
 const FICHIERS = ["./", "index.html", "app.js", "app.css", "manifest.json", "icon-192.png", "icon-512.png", "apple-touch-icon.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(VERSION).then(c => c.addAll(FICHIERS)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith("mpp-mobile-") && k !== VERSION).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
