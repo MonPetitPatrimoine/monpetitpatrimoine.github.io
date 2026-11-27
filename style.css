@@ -250,3 +250,11 @@ footer .social svg{width:20px;height:20px}
 .guidebox{margin:40px 0 8px;padding:24px 24px 8px;border:1px solid var(--line);border-radius:14px;background:var(--accent-soft)}
 .guidebox h2{margin-top:0}
 .piege{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+/* bandeau de consentement (Google Analytics, 27 novembre 2026) : en bas, sans bloquer la lecture ; Refuser et Accepter de même taille */
+.consent{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -8px 30px rgba(20,27,36,.12);padding:14px 0}
+.consent .wrap{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}
+.consent p{margin:0;flex:1 1 420px;font-size:15px;line-height:1.5}
+.consent p b{display:block;margin-bottom:2px}
+.consent-btns{display:flex;gap:10px;flex:0 0 auto}
+.consent-btns .btn{min-width:120px;justify-content:center}
+@media (max-width:480px){.consent-btns{flex:1 1 100%}.consent-btns .btn{flex:1 1 0;min-width:0}}
