@@ -4,8 +4,10 @@
 @font-face{font-family:"Schibsted Grotesk";font-weight:700;font-display:swap;src:url(../fonts/schibsted-grotesk-latin-700-normal.woff2) format("woff2")}
 :root{--bg:#FBFAF7;--surface:#FFFFFF;--alt:#F3F1EB;--ink:#17202B;--muted:#5A6571;--line:#E4E1D8;--accent:#2F5BEA;--accent-ink:#fff;--accent-soft:#E8EEFD;--pos:#1F7A45;--neg:#B33A33;--dep:#7C8A99;
   --e0:#2F5BEA;--e1:#0E8F78;--e2:#C98A12;--e3:#4A7C8C;--e4:#C4553A;--e5:#7A55C7;--font:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;color-scheme:light}
-@media (prefers-color-scheme:dark){:root{--bg:#101419;--surface:#171D25;--alt:#141A21;--ink:#E9EDF2;--muted:#A6B0BC;--line:#2A333F;--accent:#7EA2FF;--accent-ink:#0F141B;--accent-soft:#1C2740;--pos:#5FD08F;--neg:#F08A82;--dep:#8E9CAB;
+@media (prefers-color-scheme:dark){:root:not([data-theme=clair]){--bg:#101419;--surface:#171D25;--alt:#141A21;--ink:#E9EDF2;--muted:#A6B0BC;--line:#2A333F;--accent:#7EA2FF;--accent-ink:#0F141B;--accent-soft:#1C2740;--pos:#5FD08F;--neg:#F08A82;--dep:#8E9CAB;
   --e0:#7EA2FF;--e1:#45CDB2;--e2:#E9B44C;--e3:#7FB3C4;--e4:#EE8C72;--e5:#B497F0;color-scheme:dark}}
+:root[data-theme=sombre]{--bg:#101419;--surface:#171D25;--alt:#141A21;--ink:#E9EDF2;--muted:#A6B0BC;--line:#2A333F;--accent:#7EA2FF;--accent-ink:#0F141B;--accent-soft:#1C2740;--pos:#5FD08F;--neg:#F08A82;--dep:#8E9CAB;
+  --e0:#7EA2FF;--e1:#45CDB2;--e2:#E9B44C;--e3:#7FB3C4;--e4:#EE8C72;--e5:#B497F0;color-scheme:dark}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 var(--font);padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
