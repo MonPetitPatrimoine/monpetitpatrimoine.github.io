@@ -9,7 +9,7 @@
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" id="tc-clair" content="#FBFAF7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" id="tc-sombre" content="#101419" media="(prefers-color-scheme: dark)">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src https://mon-petit-patrimoine-paiement.monpetitpatrimoine.workers.dev; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://mon-petit-patrimoine-paiement.monpetitpatrimoine.workers.dev; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
 <!-- manifeste ajouté par app.js, sauf sur iPhone et iPad : leur icône d'écran d'accueil doit reprendre l'adresse de la page (voir app.js) -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -17,8 +17,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="icon" href="icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="app.css?v=5">
-<script src="app.js?v=5" defer></script>
+<link rel="stylesheet" href="app.css?v=6">
+<script src="app.js?v=6" defer></script>
 </head>
 <body>
 <header class="top">
@@ -36,6 +36,11 @@
     </ol>
     <p class="muted small">Vos chiffres sont chiffrés sur l’ordinateur et déchiffrés seulement ici : personne d’autre ne peut les lire, pas même Mon Petit Patrimoine.</p>
     <p><a class="btn" href="/">Découvrir l’application</a></p>
+  </section>
+  <section id="demo" class="card install" hidden>
+    <p class="install-t"><img src="icon-192.png" alt="" width="40" height="40"><span><b>Démonstration</b><span class="small muted">Chiffres fictifs. Avec l’application sur votre ordinateur, c’est votre propre Synthèse qui s’affiche ici, chiffrée de bout en bout.</span></span></p>
+    <p><a class="btn" href="/liens.html?c=demo#lien-liens">Recevoir le lien pour mon ordinateur</a></p>
+    <p class="small"><a href="/">Découvrir l’application</a></p>
   </section>
   <section id="installer" class="card install" hidden>
     <p class="install-t"><img src="icon-192.png" alt="" width="40" height="40"><span><b>Installez l’application</b><span class="small muted">Une icône sur l’écran d’accueil, en plein écran, même hors ligne.</span></span></p>
