@@ -8,11 +8,15 @@
    gardé chiffré pour l'ouverture hors ligne. Aucune mesure d'audience, aucun cookie. Tout texte venu des données est inséré
    comme du texte (textContent), jamais comme du HTML. */
 const API = "https://mon-petit-patrimoine-paiement.monpetitpatrimoine.workers.dev/sync/";
-const VERSION_APP = "4";   // même numéro que « ?v= » dans index.html et que le cache de sw.js
+const VERSION_APP = "5";   // même numéro que « ?v= » dans index.html et que le cache de sw.js
 const K_THEME = "mpp-mobile-theme", K_ASSOC = "mpp-mobile-association", K_BLOC = "mpp-mobile-bloc", K_MASQUE = "mpp-mobile-masque", K_PER = "mpp-mobile-periode";
 const $ = id => document.getElementById(id);
 const eur = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" });
 const eur0 = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+/* montants masqués (bouton œil) : « •••• € » partout, comme dans l'application de bureau (01-utils.js) */
+let masque = false;
+const MASK = "••••\u00a0€";
+[eur, eur0].forEach(f => { const vrai = f.format.bind(f); Object.defineProperty(f, "format", { value: v => masque ? MASK : vrai(v), configurable: true }); });
 const pct = new Intl.NumberFormat("fr-FR", { style: "percent", maximumFractionDigits: 1 });
 const MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
 const signe = (v, f) => (v > 0.005 ? "+" : v < -0.005 ? "−" : "") + f(Math.abs(v));
@@ -115,7 +119,7 @@ function afficher() {
     (S.repartition || []).length ? [el("h2", {}, "Répartition"), el("div", { class: "card" },
       el("div", { class: "barre", role: "img", "aria-label": "Répartition par type d’actif" }, S.repartition.map(r => el("span", { style: "width:" + (S.total > 0 ? r.val / S.total * 100 : 0).toFixed(2) + "%;background:" + couleur(r.couleur) }))),
       el("div", { class: "rep" }, S.repartition.map(r => [el("span", { class: "chip", style: "background:" + couleur(r.couleur) }), el("span", {}, r.nom), el("span", {}, S.total > 0 ? pct.format(r.val / S.total) : "")])))] : null,
-    (S.aVenir || []).length ? [el("h2", {}, "À venir"), el("div", { class: "card" }, el("ul", { class: "liste" }, S.aVenir.map(x => el("li", {}, x.texte, el("small", {}, x.mois ? moisFr(x.mois) : dateFr(x.date))))))] : null,
+    (S.aVenir || []).length ? [el("h2", {}, "À venir"), el("div", { class: "card" }, el("ul", { class: "liste" }, S.aVenir.map(x => el("li", {}, masque && x.texteMasque ? x.texteMasque : x.texte,el("small", {}, x.mois ? moisFr(x.mois) : dateFr(x.date))))))] : null,
     (S.objectifs || []).length ? [el("h2", {}, "Objectifs"), el("div", { class: "card" }, el("ul", { class: "liste" }, S.objectifs.map(g => el("li", {},
       el("b", {}, g.nom), el("div", { class: "prog", role: "progressbar", "aria-valuemin": "0", "aria-valuemax": "100", "aria-valuenow": String(Math.round(g.ratio * 100)), "aria-label": "Avancement : " + g.nom }, el("i", { style: "width:" + (g.ratio * 100).toFixed(1) + "%" })),
       el("small", {}, montant(g.actuel, eur0), " sur ", montant(g.cible, eur0), g.atteint ? " · atteint" : g.retard ? " · à accélérer" : "", g.echeance ? " · " + moisFr(g.echeance) : "")))))] : null
@@ -150,7 +154,7 @@ async function demarrer() {
   proposerInstallation(assoc);
   $("version").textContent = "Version " + VERSION_APP + " · " + (INSTALLEE ? "application installée" : "dans le navigateur");
   if (!assoc) { etat(""); return; }
-  const masque = !!lire(K_MASQUE); document.body.classList.toggle("cache", masque); $("masquer").setAttribute("aria-pressed", String(masque));
+  regleMasque(!!lire(K_MASQUE));
   const garde = lire(K_BLOC);
   if (garde) { try { donnees = await dechiffrer(garde, assoc.cle); afficher(); } catch (e) {} }
   if (!donnees) etat("Chargement…");
@@ -162,11 +166,17 @@ const THEMES = [["auto", "◐", "comme le téléphone"], ["clair", "☀", "clair
 function appliquerTheme(t) {
   const x = THEMES.find(y => y[0] === t) || THEMES[0];
   if (x[0] === "auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", x[0]);
+  $("tc-clair").content = x[0] === "sombre" ? "#101419" : "#FBFAF7"; $("tc-sombre").content = x[0] === "clair" ? "#FBFAF7" : "#101419";
   $("theme").textContent = x[1]; $("theme").setAttribute("aria-label", "Thème : " + x[2]); $("theme").title = "Thème : " + x[2];
 }
 appliquerTheme(lire(K_THEME));
 $("theme").onclick = () => { const i = THEMES.findIndex(y => y[0] === (lire(K_THEME) || "auto")), t = THEMES[(i + 1) % THEMES.length][0]; ecrire(K_THEME, t === "auto" ? null : t); appliquerTheme(t); };
-$("masquer").onclick = () => { const on = !document.body.classList.contains("cache"); document.body.classList.toggle("cache", on); $("masquer").setAttribute("aria-pressed", String(on)); ecrire(K_MASQUE, on); };
+function regleMasque(on) {
+  masque = on; const t = on ? "Afficher les montants" : "Masquer les montants";
+  $("masquer").setAttribute("aria-pressed", String(on)); $("masquer").setAttribute("aria-label", t); $("masquer").title = t;
+  afficher();
+}
+$("masquer").onclick = () => { regleMasque(!masque); ecrire(K_MASQUE, masque); };
 $("oublier").onclick = () => { if (!confirm("Dissocier ce téléphone ? Ses chiffres y seront effacés. Vous pourrez l’associer à nouveau avec le QR code de l’ordinateur." + (IOS && INSTALLEE ? " Supprimez ensuite l’icône de l’écran d’accueil : elle garde le lien d’association." : ""))) return; ecrire(K_ASSOC, null); ecrire(K_BLOC, null); history.replaceState(null, "", location.pathname); donnees = null; $("synthese").hidden = true; $("synthese").replaceChildren(); demarrer(); };
 document.addEventListener("visibilitychange", () => { const a = lire(K_ASSOC); if (document.visibilityState === "visible" && a) charger(a); });
 window.addEventListener("hashchange", demarrer);
