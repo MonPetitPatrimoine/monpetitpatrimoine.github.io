@@ -9,7 +9,11 @@
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#2F5BEA">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src https://mon-petit-patrimoine-paiement.monpetitpatrimoine.workers.dev; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
-<link rel="manifest" href="manifest.json">
+<!-- manifeste ajouté par app.js, sauf sur iPhone et iPad : leur icône d'écran d'accueil doit reprendre l'adresse de la page (voir app.js) -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Patrimoine">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="icon" href="icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="stylesheet" href="app.css">
@@ -31,6 +35,16 @@
     </ol>
     <p class="muted small">Vos chiffres sont chiffrés sur l’ordinateur et déchiffrés seulement ici : personne d’autre ne peut les lire, pas même Mon Petit Patrimoine.</p>
     <p><a class="btn" href="/">Découvrir l’application</a></p>
+  </section>
+  <section id="installer" class="card install" hidden>
+    <p class="install-t"><img src="icon-192.png" alt="" width="40" height="40"><span><b>Installez l’application</b><span class="small muted">Une icône sur l’écran d’accueil, en plein écran, même hors ligne.</span></span></p>
+    <p id="inst-android" hidden><button type="button" class="btn" id="inst-btn">Installer l’application</button></p>
+    <ol id="inst-ios" class="etapes" hidden>
+      <li>Touchez <b>Partager</b> <svg class="pict" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M6 11H5v10h14V11h-1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> dans la barre du navigateur.</li>
+      <li>Choisissez <b>Sur l’écran d’accueil</b> <svg class="pict" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> (faites défiler si besoin), puis <b>Ajouter</b>.</li>
+    </ol>
+    <p id="inst-autre" class="small" hidden>Dans le menu <b>⋮</b> du navigateur, choisissez <b>Installer l’application</b> ou <b>Ajouter à l’écran d’accueil</b>.</p>
+    <button type="button" class="lien small" id="inst-plus-tard">Plus tard</button>
   </section>
   <section id="synthese" hidden></section>
   <p id="etat" class="etat small muted" role="status"></p>
