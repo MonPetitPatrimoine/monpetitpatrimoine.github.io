@@ -247,4 +247,6 @@ footer .social svg{width:20px;height:20px}
 .newsbar a{font-weight:700;margin-left:6px}
 .newsbox{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin:32px 0 0;padding:16px 20px;border:1px solid var(--line);border-radius:12px;background:var(--accent-soft)}
 .newsbox p{margin:0;flex:1 1 280px}
+.guidebox{margin:40px 0 8px;padding:24px 24px 8px;border:1px solid var(--line);border-radius:14px;background:var(--accent-soft)}
+.guidebox h2{margin-top:0}
 .piege{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
