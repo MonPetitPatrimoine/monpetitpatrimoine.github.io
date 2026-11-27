@@ -8,7 +8,7 @@
    gardé chiffré pour l'ouverture hors ligne. Aucune mesure d'audience, aucun cookie. Tout texte venu des données est inséré
    comme du texte (textContent), jamais comme du HTML. */
 const API = "https://mon-petit-patrimoine-paiement.monpetitpatrimoine.workers.dev/sync/";
-const VERSION_APP = "5";   // même numéro que « ?v= » dans index.html et que le cache de sw.js
+const VERSION_APP = "6";   // même numéro que « ?v= » dans index.html et que le cache de sw.js
 const K_THEME = "mpp-mobile-theme", K_ASSOC = "mpp-mobile-association", K_BLOC = "mpp-mobile-bloc", K_MASQUE = "mpp-mobile-masque", K_PER = "mpp-mobile-periode";
 const $ = id => document.getElementById(id);
 const eur = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" });
@@ -148,7 +148,17 @@ async function charger(assoc) {
     etat(donnees ? "Hors ligne : derniers chiffres reçus." : "Connexion impossible : réessayez plus tard.");
   } finally { $("actualiser").disabled = false; }
 }
+/* démo (27 novembre 2026, analyse de la communication) : /mobile/#demo affiche la Synthèse des données de démonstration de
+   l'application de bureau (demo.json, chiffres fictifs, en clair), sans association ni stockage */
+async function demo() {
+  ["accueil", "installer", "bas", "actualiser"].forEach(id => { $(id).hidden = true; }); $("demo").hidden = false; $("masquer").hidden = false;
+  etat("Chargement…");
+  try { const r = await fetch("demo.json", { cache: "no-cache" }); if (!r.ok) throw new Error("http " + r.status); donnees = await r.json(); afficher(); etat("Démonstration : chiffres fictifs."); }
+  catch (e) { etat("La démonstration ne s’ouvre pas hors ligne : réessayez avec une connexion."); }
+}
 async function demarrer() {
+  if (location.hash === "#demo") return demo();
+  $("demo").hidden = true;
   const assoc = associer();
   $("accueil").hidden = !!assoc; $("bas").hidden = !assoc; $("actualiser").hidden = !assoc; $("masquer").hidden = !assoc;
   proposerInstallation(assoc);
