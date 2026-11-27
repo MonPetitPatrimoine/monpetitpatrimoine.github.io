@@ -8,8 +8,8 @@
    gardé chiffré pour l'ouverture hors ligne. Aucune mesure d'audience, aucun cookie. Tout texte venu des données est inséré
    comme du texte (textContent), jamais comme du HTML. */
 const API = "https://mon-petit-patrimoine-paiement.monpetitpatrimoine.workers.dev/sync/";
-const VERSION_APP = "3";   // même numéro que « ?v= » dans index.html et que le cache de sw.js
-const K_ASSOC = "mpp-mobile-association", K_BLOC = "mpp-mobile-bloc", K_MASQUE = "mpp-mobile-masque", K_PER = "mpp-mobile-periode";
+const VERSION_APP = "4";   // même numéro que « ?v= » dans index.html et que le cache de sw.js
+const K_THEME = "mpp-mobile-theme", K_ASSOC = "mpp-mobile-association", K_BLOC = "mpp-mobile-bloc", K_MASQUE = "mpp-mobile-masque", K_PER = "mpp-mobile-periode";
 const $ = id => document.getElementById(id);
 const eur = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" });
 const eur0 = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
@@ -157,6 +157,15 @@ async function demarrer() {
   await charger(assoc);
 }
 $("actualiser").onclick = () => { const a = lire(K_ASSOC); if (a) charger(a); };
+/* thème : comme le téléphone (par défaut), clair ou sombre ; retenu sur ce téléphone */
+const THEMES = [["auto", "◐", "comme le téléphone"], ["clair", "☀", "clair"], ["sombre", "☾", "sombre"]];
+function appliquerTheme(t) {
+  const x = THEMES.find(y => y[0] === t) || THEMES[0];
+  if (x[0] === "auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", x[0]);
+  $("theme").textContent = x[1]; $("theme").setAttribute("aria-label", "Thème : " + x[2]); $("theme").title = "Thème : " + x[2];
+}
+appliquerTheme(lire(K_THEME));
+$("theme").onclick = () => { const i = THEMES.findIndex(y => y[0] === (lire(K_THEME) || "auto")), t = THEMES[(i + 1) % THEMES.length][0]; ecrire(K_THEME, t === "auto" ? null : t); appliquerTheme(t); };
 $("masquer").onclick = () => { const on = !document.body.classList.contains("cache"); document.body.classList.toggle("cache", on); $("masquer").setAttribute("aria-pressed", String(on)); ecrire(K_MASQUE, on); };
 $("oublier").onclick = () => { if (!confirm("Dissocier ce téléphone ? Ses chiffres y seront effacés. Vous pourrez l’associer à nouveau avec le QR code de l’ordinateur." + (IOS && INSTALLEE ? " Supprimez ensuite l’icône de l’écran d’accueil : elle garde le lien d’association." : ""))) return; ecrire(K_ASSOC, null); ecrire(K_BLOC, null); history.replaceState(null, "", location.pathname); donnees = null; $("synthese").hidden = true; $("synthese").replaceChildren(); demarrer(); };
 document.addEventListener("visibilitychange", () => { const a = lire(K_ASSOC); if (document.visibilityState === "visible" && a) charger(a); });
