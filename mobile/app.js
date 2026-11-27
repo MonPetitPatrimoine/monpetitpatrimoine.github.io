@@ -30,12 +30,42 @@ function el(tag, attrs, ...kids) {
 }
 const montant = (v, f) => el("span", { class: "m" }, (f || eur).format(v));   // flouté quand les montants sont masqués
 
+/* ---------- installation sur l'écran d'accueil (27 novembre 2026, demande de l'utilisateur) ----------
+   Aucun téléphone ne laisse une page s'installer seule : Android (Chrome, Edge, Samsung Internet) propose un bouton
+   (beforeinstallprompt) ; iPhone et iPad n'en ont pas : on montre les deux gestes (Partager → Sur l'écran d'accueil).
+   Sur iPhone et iPad, l'application ajoutée à l'écran d'accueil ne partage pas le stockage de Safari et s'ouvre sur l'adresse
+   de la page au moment de l'ajout : la clé reste donc dans le fragment de l'adresse (jamais envoyé au serveur) tant que
+   l'application n'est pas installée, et le manifeste n'est pas déclaré (son start_url ferait perdre ce fragment). */
+const IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+const INSTALLEE = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+const K_PLUS_TARD = "mpp-mobile-installer-plus-tard", PLUS_TARD_JOURS = 30;
+let invite = null;   // événement beforeinstallprompt gardé pour le bouton
+if (!IOS) { const l = document.createElement("link"); l.rel = "manifest"; l.href = "manifest.json"; document.head.append(l); }
+function proposerInstallation(assoc) {
+  const t = lire(K_PLUS_TARD), repousse = t && Date.now() - t < PLUS_TARD_JOURS * 864e5;
+  const montrer = !!assoc && !INSTALLEE && !repousse;
+  $("installer").hidden = !montrer; if (!montrer) return;
+  $("inst-ios").hidden = !IOS; $("inst-android").hidden = IOS || !invite; $("inst-autre").hidden = IOS || !!invite;
+}
+window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); invite = e; proposerInstallation(lire(K_ASSOC)); });
+window.addEventListener("appinstalled", () => { invite = null; $("installer").hidden = true; });
+$("inst-btn").onclick = async () => {
+  if (!invite) return;
+  const e = invite; invite = null; e.prompt();
+  try { const r = await e.userChoice; if (r && r.outcome === "accepted") { $("installer").hidden = true; return; } } catch (err) {}
+  proposerInstallation(lire(K_ASSOC));
+};
+$("inst-plus-tard").onclick = () => { ecrire(K_PLUS_TARD, Date.now()); $("installer").hidden = true; };
+
 /* ---------- association du téléphone ---------- */
 function associer() {
-  const m = /^#([A-Za-z0-9_-]{22})\.([A-Za-z0-9_-]{43})$/.exec(location.hash);
-  if (m) { ecrire(K_ASSOC, { id: m[1], cle: m[2] }); ecrire(K_BLOC, null); }
-  if (location.hash) history.replaceState(null, "", location.pathname);   // la clé ne reste pas dans l'adresse ni dans l'historique
-  return lire(K_ASSOC);
+  const m = /^#([A-Za-z0-9_-]{22})\.([A-Za-z0-9_-]{43})$/.exec(location.hash), avant = lire(K_ASSOC);
+  if (m && !(avant && avant.id === m[1] && avant.cle === m[2])) { ecrire(K_ASSOC, { id: m[1], cle: m[2] }); ecrire(K_BLOC, null); }
+  const assoc = lire(K_ASSOC);
+  // la clé ne reste pas dans l'adresse ni dans l'historique, sauf sur iPhone et iPad avant l'installation (voir plus haut)
+  const voulu = IOS && !INSTALLEE && assoc ? "#" + assoc.id + "." + assoc.cle : "";
+  if (location.hash !== voulu) history.replaceState(null, "", location.pathname + voulu);
+  return assoc;
 }
 async function dechiffrer(bloc, cle) {
   const k = await crypto.subtle.importKey("raw", b64(cle), "AES-GCM", false, ["decrypt"]);
@@ -116,6 +146,7 @@ async function charger(assoc) {
 async function demarrer() {
   const assoc = associer();
   $("accueil").hidden = !!assoc; $("bas").hidden = !assoc; $("actualiser").hidden = !assoc; $("masquer").hidden = !assoc;
+  proposerInstallation(assoc);
   if (!assoc) { etat(""); return; }
   const masque = !!lire(K_MASQUE); document.body.classList.toggle("cache", masque); $("masquer").setAttribute("aria-pressed", String(masque));
   const garde = lire(K_BLOC);
@@ -125,7 +156,7 @@ async function demarrer() {
 }
 $("actualiser").onclick = () => { const a = lire(K_ASSOC); if (a) charger(a); };
 $("masquer").onclick = () => { const on = !document.body.classList.contains("cache"); document.body.classList.toggle("cache", on); $("masquer").setAttribute("aria-pressed", String(on)); ecrire(K_MASQUE, on); };
-$("oublier").onclick = () => { if (!confirm("Dissocier ce téléphone ? Ses chiffres y seront effacés. Vous pourrez l’associer à nouveau avec le QR code de l’ordinateur.")) return; ecrire(K_ASSOC, null); ecrire(K_BLOC, null); donnees = null; $("synthese").hidden = true; $("synthese").replaceChildren(); demarrer(); };
+$("oublier").onclick = () => { if (!confirm("Dissocier ce téléphone ? Ses chiffres y seront effacés. Vous pourrez l’associer à nouveau avec le QR code de l’ordinateur." + (IOS && INSTALLEE ? " Supprimez ensuite l’icône de l’écran d’accueil : elle garde le lien d’association." : ""))) return; ecrire(K_ASSOC, null); ecrire(K_BLOC, null); history.replaceState(null, "", location.pathname); donnees = null; $("synthese").hidden = true; $("synthese").replaceChildren(); demarrer(); };
 document.addEventListener("visibilitychange", () => { const a = lire(K_ASSOC); if (document.visibilityState === "visible" && a) charger(a); });
 window.addEventListener("hashchange", demarrer);
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
